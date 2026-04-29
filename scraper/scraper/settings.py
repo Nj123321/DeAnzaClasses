@@ -14,6 +14,10 @@ NEWSPIDER_MODULE = "scraper.spiders"
 
 ADDONS = {}
 
+# logging settings
+LOG_LEVEL = 'DEBUG'
+LOG_FILE = 'logs/scrapy.log'
+LOG_FILE_APPEND = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "scraper (+http://www.yourdomain.com)"
