@@ -8,7 +8,7 @@ class ClassSpider(scrapy.Spider):
 
     async def start(self):
         urls = [
-            "https://quotes.toscrape.com/page/1/"
+            "https://www.deanza.edu/schedule/"
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -16,5 +16,5 @@ class ClassSpider(scrapy.Spider):
     def parse(self, response):
         page = response.url.split("/")[-2]
         filename = f"quotes-{page}.html"
-        Path(filename).write_bytes(response.body)
+        # Path(filename).write_bytes(response.body)
         self.log(f"Saved file {filename}")

@@ -19,6 +19,12 @@ LOG_LEVEL = 'DEBUG'
 LOG_FILE = 'logs/scrapy.log'
 LOG_FILE_APPEND = False
 
+DOWNLOADER_MIDDLEWARES = {
+    "scraper.middlewares.ScraperDownloaderMiddleware": 543,
+}
+ROBOTSTXT_OBEY = False
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "scraper (+http://www.yourdomain.com)"
 
