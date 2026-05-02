@@ -4,8 +4,9 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from scrapy.http import HtmlResponse
+from curl_cffi import requests as cffi_requests
 
-# useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
 
@@ -66,16 +67,16 @@ class ScraperDownloaderMiddleware:
         return s
 
     def process_request(self, request, spider):
-        # Called for each request that goes through the downloader
-        # middleware.
-
-        # Must either:
-        # - return None: continue processing this request
-        # - or return a Response object
-        # - or return a Request object
-        # - or raise IgnoreRequest: process_exception() methods of
-        #   installed downloader middleware will be called
-        return None
+        r = cffi_requests.get(request.url, impersonate="chrome")
+        headers = {k: v for k, v in r.headers.items()
+                   if k.lower() not in ("content-encoding", "transfer-encoding")}
+        return HtmlResponse(
+            url=request.url,
+            status=r.status_code,
+            headers=headers,
+            body=r.content,
+            request=request,
+        )
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
